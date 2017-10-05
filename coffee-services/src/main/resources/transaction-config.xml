@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <import resource="classpath*:hiber-config.xml"/>
+
+    <context:annotation-config />
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
+
+    <context:component-scan base-package="by.home.hryhoryeu.coffee.services" />
+
+    <bean id="txManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="config" class="by.home.hryhoryeu.coffee.dto.ConfigurationDTO" scope="prototype">
+        <property name="x" value="${config.x?#{10}}"/>
+        <property name="m" value="${config.m?#{2}}"/>
+        <property name="n" value="${config.n?#{5}}"/>
+        <property name="defaultConfig" value="${config.defaultConfig?true}"/>
+    </bean>
+</beans>

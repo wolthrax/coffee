@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="definition-coffeelist" template="/WEB-INF/view/layouts/default-coffeelist.jsp">
+        <put-attribute name="header" value="/WEB-INF/view/common/header.jsp"/>
+        <put-attribute name="main" value="/WEB-INF/view/coffee/main.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footer.jsp"/>
+    </definition>
+    <definition name="definition-orderlist" template="/WEB-INF/view/layouts/default-orderlist.jsp">
+        <put-attribute name="header" value="/WEB-INF/view/common/header.jsp"/>
+        <put-attribute name="main" value="/WEB-INF/view/order/main.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footer.jsp"/>
+    </definition>
+    <definition name="definition-confirmation" template="/WEB-INF/view/layouts/default-confirmation.jsp">
+        <put-attribute name="header" value="/WEB-INF/view/common/header.jsp"/>
+        <put-attribute name="main" value="/WEB-INF/view/confirmation/main.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footer.jsp"/>
+    </definition>
+</tiles-definitions>

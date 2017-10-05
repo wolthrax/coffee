@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/jdbc
+			http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <context:annotation-config />
+    <context:component-scan base-package="by.home.hryhoryeu.coffee.dba"/>
+
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="valueSeparator" value="?"/>
+        <property name="locations">
+            <list>
+                <value>file:${CATALINA_HOME}/coffee/db.properties</value>
+                <value>file:${CATALINA_HOME}/coffee/config.properties</value>
+                <value>classpath:db-default.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="url" value="${db.url?${db_def.url}}"/>
+        <property name="username" value="${db.username?${db_def.username}}"/>
+        <property name="password" value="${db.password?${db_def.password}}"/>
+        <property name="driverClassName" value="${db.driverClassName?${db_def.driverClassName}}"/>
+        <property name="initialSize" value="${db.initialSize?${db_def.initialSize}}"/>
+        <property name="maxActive" value="${db.maxActive?${db_def.maxActive}}"/>
+    </bean>
+
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="classpath:data.sql"/>
+    </jdbc:initialize-database>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:packagesToScan="by.home.hryhoryeu.coffee.entities"
+          p:hibernateProperties-ref="hibernateProperties"/>
+
+    <util:properties id = "hibernateProperties">
+        <prop key="hibernate.dialect">${hibernate.dialect?${hibernate_def.dialect}}</prop>
+        <prop key="hibernate.connection.isolation">${hibernate.connection.isolation?${hibernate_def.connection.isolation}}</prop>
+        <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto?${hibernate_def.hbm2ddl.auto}}</prop>
+        <prop key="hibernate.show_sql">${hibernate.show_sql?${hibernate_def.show_sql}}</prop>
+        <prop key="hibernate.format_sql">${hibernate.format_sql?${hibernate_def.format_sql}}</prop>
+    </util:properties>
+</beans>
