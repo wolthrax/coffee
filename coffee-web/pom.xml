@@ -64,7 +64,7 @@
 	</dependencies>
 	
 	<build>
-		<finalName>coffee-web</finalName>
+		<finalName>coffee</finalName>
 	</build>
 	
 </project>

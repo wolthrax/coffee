@@ -4,4 +4,5 @@
 2. Скопировать конфигурационные файлы db.properties и config.properties в каталог ${CATALINA_HOME}/coffee/
 3. Cобрать проект командой mvn install
 4. Скопировать полученный файл coffee.war в каталог {CATALINA_HOME}/coffee/webapps/
-5. Запустить Tomcat командой catalina run
+5. Создать базу "coffee" в MySQL
+6. Запустить Tomcat командой catalina run
